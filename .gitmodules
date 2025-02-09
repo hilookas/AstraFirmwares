@@ -1,0 +1,9 @@
+[submodule "AstraArmController"]
+	path = AstraArmController
+	url = https://github.com/hilookas/AstraArmController.git
+[submodule "AstraPedalController"]
+	path = AstraPedalController
+	url = https://github.com/hilookas/AstraPedalController.git
+[submodule "AstraLiftController"]
+	path = AstraLiftController
+	url = https://github.com/hilookas/AstraLiftController.git
