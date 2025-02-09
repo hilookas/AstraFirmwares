@@ -23,7 +23,7 @@ odrive_config:
 # Ref: https://docs.odriverobotics.com/v/0.5.6/control.html
 # Ref: https://things-in-motion.blogspot.com/2018/12/how-to-select-right-power-source-for.html
 
-odrv0.erase_configuration()
+odrv0.erase_configuration() # with reboot
 
 # 放宽保护条件
 odrv0.config.dc_max_negative_current = -5.0 # 反向电流
@@ -40,61 +40,8 @@ odrv0.axis0.encoder.config.calib_range = 0.1 # 放宽编码器标定范围
 odrv0.axis0.encoder.config.calib_scan_distance = 150
 odrv0.axis0.motor.config.current_control_bandwidth = 100
 
-odrv0.save_configuration()
-odrv0.reboot()
-
-
-
-
-
-# 编码器标定
-odrv0.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE # 开始标定
-
-# wait until motor stop
-
-odrv0.axis0.encoder.config.pre_calibrated = True
-odrv0.axis0.motor.config.pre_calibrated = True
-
-odrv0.save_configuration()
-odrv0.reboot()
-
-
-
-
-
-# 速度模式 + 调参
-odrv0.axis0.controller.config.control_mode = CONTROL_MODE_VELOCITY_CONTROL
-odrv0.axis0.controller.config.vel_limit = 20
-# odrv0.axis0.controller.config.pos_gain = 10
-odrv0.axis0.controller.config.vel_gain = 0.05
-odrv0.axis0.controller.config.vel_integrator_gain = 0.07
-
-# 梯形加减速
-odrv0.axis0.controller.config.input_mode = INPUT_MODE_VEL_RAMP
-odrv0.axis0.controller.config.vel_ramp_rate = 20	# 加速度
-
 # ignore illegal_hall_state error
 odrv0.axis0.encoder.config.ignore_illegal_hall_state = True
-
-# 开启闭环控制
-# odrv0.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
-# odrv0.axis0.config.startup_closed_loop_control = True
-
-odrv0.save_configuration()
-odrv0.reboot()
-
-
-
-
-
-# 测试
-odrv0.axis0.controller.input_vel = 5
-
-
-
-
-
-
 
 # 放宽保护条件
 odrv0.axis1.motor.config.current_lim = 20
@@ -110,10 +57,33 @@ odrv0.axis1.encoder.config.calib_range = 0.1 # 放宽编码器标定范围
 odrv0.axis1.encoder.config.calib_scan_distance = 150
 odrv0.axis1.motor.config.current_control_bandwidth = 100
 
+# ignore illegal_hall_state error
+odrv0.axis1.encoder.config.ignore_illegal_hall_state = True
+
+# sleep(1)
+
 odrv0.save_configuration()
 odrv0.reboot()
 
 
+
+
+
+
+
+
+# 编码器标定
+odrv0.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE # 开始标定
+
+# wait until motor stop
+
+odrv0.axis0.encoder.config.pre_calibrated = True
+odrv0.axis0.motor.config.pre_calibrated = True
+
+# sleep(1)
+
+odrv0.save_configuration()
+odrv0.reboot()
 
 
 
@@ -125,6 +95,8 @@ odrv0.axis1.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE # 开始标�
 odrv0.axis1.encoder.config.pre_calibrated = True
 odrv0.axis1.motor.config.pre_calibrated = True
 
+# sleep(1)
+
 odrv0.save_configuration()
 odrv0.reboot()
 
@@ -132,24 +104,60 @@ odrv0.reboot()
 
 
 
-# 速度模式 + 调参
-odrv0.axis1.controller.config.control_mode = CONTROL_MODE_VELOCITY_CONTROL
-odrv0.axis1.controller.config.vel_limit = 20
-# odrv0.axis1.controller.config.pos_gain = 10
-odrv0.axis1.controller.config.vel_gain = 0.05
-odrv0.axis1.controller.config.vel_integrator_gain = 0.07
+
+
+
+
+
+
+
+
+
+
+
+
+# 位置模式 + 调参
+odrv0.axis0.controller.config.control_mode = CONTROL_MODE_POSITION_CONTROL
+odrv0.axis0.controller.config.pos_gain = 20
+odrv0.axis0.controller.config.vel_gain = 0.10
+odrv0.axis0.controller.config.vel_integrator_gain = 0
+
+# 位置模式 + 调参
+odrv0.axis1.controller.config.control_mode = CONTROL_MODE_POSITION_CONTROL
+odrv0.axis1.controller.config.pos_gain = 20
+odrv0.axis1.controller.config.vel_gain = 0.10
+odrv0.axis1.controller.config.vel_integrator_gain = 0
 
 # 梯形加减速
-odrv0.axis1.controller.config.input_mode = INPUT_MODE_VEL_RAMP
-odrv0.axis1.controller.config.vel_ramp_rate = 20	# 加速度
+odrv0.axis0.controller.config.input_mode = INPUT_MODE_TRAP_TRAJ
+odrv0.axis0.controller.config.vel_limit = 20
+odrv0.axis0.trap_traj.config.vel_limit = 20
+odrv0.axis0.trap_traj.config.accel_limit = 1
+odrv0.axis0.trap_traj.config.decel_limit = 1
 
-# ignore illegal_hall_state error
-odrv0.axis1.encoder.config.ignore_illegal_hall_state = True
+# 梯形加减速
+odrv0.axis1.controller.config.input_mode = INPUT_MODE_TRAP_TRAJ
+odrv0.axis1.controller.config.vel_limit = 20
+odrv0.axis1.trap_traj.config.vel_limit = 20
+odrv0.axis1.trap_traj.config.accel_limit = 1
+odrv0.axis1.trap_traj.config.decel_limit = 1
 
-# 开启闭环控制
+# # 开启闭环控制
+# odrv0.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
+# odrv0.axis0.config.startup_closed_loop_control = True
+
+# # 测试
+# odrv0.axis0.controller.input_pos = 5
+
+# # 开启闭环控制
 # odrv0.axis1.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
 # odrv0.axis1.config.startup_closed_loop_control = True
 
+# # 测试
+# odrv0.axis1.controller.input_pos = 0
+
+# sleep(1)
+
 odrv0.save_configuration()
 odrv0.reboot()
 
@@ -157,12 +165,14 @@ odrv0.reboot()
 
 
 
-# 测试
-odrv0.axis1.controller.input_vel = 5
+
+
 
 
 
 
 # for any errors
 dump_errors(odrv0)
+odrv0.clear_errors()
+
 ```
