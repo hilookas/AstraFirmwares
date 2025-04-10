@@ -7,3 +7,6 @@
 [submodule "AstraLiftController"]
 	path = AstraLiftController
 	url = https://github.com/hilookas/AstraLiftController.git
+[submodule "AstraHeadController"]
+	path = AstraHeadController
+	url = https://github.com/hilookas/AstraArmController.git
