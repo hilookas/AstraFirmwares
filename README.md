@@ -10,43 +10,36 @@
   <a href="https://www.notion.so/1b433900bc8780c4a503e3490ce3e718?pvs=21" target="_blank">Documentation</a> • 
   <a href="https://github.com/hilookas/astra_ws" target="_blank">ROS Code</a> •
   <a href="https://github.com/hilookas/AstraFirmwares" target="_blank">Firmware Code</a> •
-  <a href="https://github.com/hilookas/Astra_Hardwares" target="_blank">Hardware Code</a> •
+  <a href="https://github.com/hilookas/Astra_Hardwares" target="_blank">Hardware Design</a> •
   <a href="https://huggingface.co/lookas" target="_blank">Dataset</a>
 </div>
 
 ## Repository Contents
 
-This repository contains firmware resources for AhaRobot, organized as follows:
+This repository contains four submodules of firmware resources for AhaRobot, organized as follows:
 
 ### Main Components
 
 #### Robot Body Controllers
+
 - **AstraArmController**: Arm controller firmware
   - Controls the arm movements of the Astra robot
 
 - **AstraLiftController**: Lift controller firmware
-  - Controls the robot's lifting mechanism
+  - Controls the arm lifting
 
 - **AstraHeadController**: Head controller firmware
-  - Controls the robot's head movements and expressions
+  - Controls the robot's head movements
 
 #### Teleoperation Controllers  
-- **AstraPedalController**: Teleoperation controller firmware
-  - Controls and communicates with the teleoperation handle
+- **AstraPedalController**: Firmware for hall-effect pedals
+  - Convert the hall-effect analog sensor read to digital form and send it using WebSerial
 
 ## How-to-use
 
-For detailed documentation, please refer to the following resources:
+For detailed documentation, please refer to our notion site:
 
-- [Getting Started Guide](docs/getting_started.md)
-- [Hardware Assembly Guide](docs/hardware_assembly.md)
-- [Flashing Firmware](docs/firmware_flashing.md)
-  - Flashing Lift Controller
-  - Testing Lift Controller
-  - Flashing Arm Controller
-  - Calibrating Centor Point of Joints
-  - Testing Two Arms
-  - Configuring ODrive
+<https://www.notion.so/aha-robot/Flashing-Firmware-1d133900bc87807c9070f3c6736d68b7>
 
 ## License
 
